@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>上菜顺序 Course Sequence · 2025–2026 视觉设计作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1DACD6;          
+  --choco:#3A2318;         
+  --choco-light:#5C3A21;   
+  --yellow:#FFE066;        
+  --pink:#FFB6C1;          
+  --red:#D93B3B;           
+  --cream:#FDFBF7;         
+  --line:rgba(58,35,24,.15);
+  --serif:"Noto Serif SC",serif; 
+  --en:"Cormorant Garamond",serif; 
+  --sans:"Noto Sans SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* 背景回归纯正孔雀蓝 */
+body{background:var(--blue);color:var(--choco);font-family:var(--sans);overflow-x:hidden;line-height:1.8}
+
+::selection{background:var(--yellow);color:var(--choco)}
+
+/* ============ 开席 LOADING ============ */
+#loader{position:fixed;inset:0;background:var(--blue);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .9s ease,visibility .9s}
+#loader.done{opacity:0;visibility:hidden}
+#loader .t{font-family:var(--serif);font-weight:900;font-size:clamp(26px,5vw,52px);letter-spacing:.5em;text-indent:.5em;color:var(--choco)}
+#loader .e{font-family:var(--en);font-size:14px;letter-spacing:.55em;color:var(--choco);text-transform:uppercase;font-weight:600}
+#loader .bar{width:180px;height:4px;background:rgba(58,35,24,.2);overflow:hidden;border-radius:2px}
+#loader .bar i{display:block;height:100%;background:var(--choco);animation:load 1.8s cubic-bezier(.7,0,.3,1) forwards;transform:translateX(-100%)}
+@keyframes load{to{transform:translateX(0)}}
+
+/* ============ 顶部导航 ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;background:rgba(29,172,214,.85);backdrop-filter:blur(6px);border-bottom:1px solid rgba(58,35,24,.08)}
+nav .logo{font-family:var(--serif);font-size:16px;letter-spacing:.3em;font-weight:700}
+nav .logo em{font-family:var(--en);font-style:italic;color:var(--yellow);letter-spacing:.08em;font-weight:600}
+nav ul{display:flex;gap:6px;list-style:none}
+nav ul a{color:var(--choco);text-decoration:none;font-size:13px;letter-spacing:.15em;padding:8px 14px;border-radius:999px;border:1px solid transparent;transition:.35s;font-weight:500}
+nav ul a:hover{border-color:var(--choco);background:var(--yellow)}
+nav ul a b{font-family:var(--en);font-weight:700;font-style:italic;margin-right:4px;color:var(--choco)}
+
+/* ============ HERO ============ */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:120px 6vw 80px}
+#hero .plate{width:min(52vw,320px);aspect-ratio:1;border:4px solid var(--choco);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:42px;position:relative;background:var(--cream);box-shadow:0 20px 40px rgba(0,0,0,.15), inset 0 -10px 20px rgba(0,0,0,.05)}
+#hero .plate::before{content:"";position:absolute;inset:18px;border:2px dashed rgba(58,35,24,.25);border-radius:50%}
+#hero .plate span{font-family:var(--en);font-style:italic;font-size:15px;letter-spacing:.4em;color:var(--choco);text-transform:uppercase;font-weight:600;animation:spin 40s linear infinite reverse}
+#hero .plate .fork,#hero .plate .knife{position:absolute;width:clamp(46px,6vw,76px);filter:drop-shadow(3px 5px 6px rgba(0,0,0,.22))}
+#hero .plate .fork{left:-90px;top:50%;transform:translateY(-50%) rotate(12deg)}
+#hero .plate .knife{right:-90px;top:50%;transform:translateY(-50%) rotate(-12deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(40px,9vw,110px);letter-spacing:.12em;line-height:1.15;color:var(--choco)}
+#hero .en{font-family:var(--en);font-style:italic;font-size:clamp(16px,2.4vw,26px);color:var(--choco);letter-spacing:.28em;margin-top:18px;text-transform:uppercase;font-weight:600}
+#hero .meta{margin-top:46px;display:flex;gap:28px;font-size:13px;letter-spacing:.25em;color:rgba(58,35,24,.7);font-weight:500}
+#hero .meta i{width:36px;height:2px;background:rgba(58,35,24,.3);align-self:center}
+#hero .scroll{position:absolute;bottom:34px;font-family:var(--en);font-size:13px;letter-spacing:.4em;color:var(--choco);animation:float 2.4s ease-in-out infinite;font-weight:600}
+@keyframes float{50%{transform:translateY(8px)}}
+
+/* ============ 通用 Section ============ */
+section{position:relative}
+.wrap{max-width:1200px;margin:0 auto;padding:0 6vw}
+.sec-tag{font-family:var(--en);font-style:italic;color:var(--choco);font-size:15px;letter-spacing:.35em;text-transform:uppercase;font-weight:600}
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ 菜单 · 设计稿小卡片 ============ */
+#menu{padding:130px 0 110px}
+.menu-head{text-align:center;margin-bottom:26px}
+.menu-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4vw,40px);letter-spacing:.3em;text-indent:.3em;color:var(--choco)}
+.menu-head .en-t{font-family:var(--en);font-style:italic;color:rgba(58,35,24,.75);margin-top:4px;letter-spacing:.2em;font-weight:600}
+.menu-head .orn{color:rgba(58,35,24,.7);letter-spacing:.5em;margin-top:8px;font-size:14px}
+.dish-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,3vw,46px);max-width:1240px;margin:0 auto;padding:96px 6vw 0}
+.dish{position:relative;display:block;text-decoration:none}
+.dish:nth-child(odd){margin-top:92px}
+.dish .num{position:absolute;top:-62px;left:-44px;z-index:0;width:104px;height:158px;display:flex;align-items:flex-start;justify-content:flex-start;padding:2px 0 0 4px;font-family:var(--en);font-style:italic;font-weight:600;font-size:96px;line-height:1;color:#2B160C}
+.dish .num.pink{background:#E988BD}
+.dish .num.yellow{background:#F6E476}
+.dish-card{position:relative;z-index:1;background:#6D2C16;aspect-ratio:378/470;padding:24px 22px 22px;display:flex;flex-direction:column;box-shadow:0 18px 36px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s cubic-bezier(.2,.7,.2,1)}
+.dish:hover .dish-card{transform:translateY(-12px);box-shadow:0 32px 52px rgba(0,0,0,.3)}
+.dish h3{align-self:flex-end;text-align:right;font-family:var(--serif);font-weight:900;font-size:clamp(20px,2.1vw,29px);line-height:1.4;letter-spacing:.14em;color:#FDF785}
+.dish .part{align-self:flex-start;margin-top:8px;border:1px solid rgba(253,244,231,.8);color:#F6E7D7;font-size:12.5px;letter-spacing:.12em;padding:3px 10px 5px;transform:rotate(-4deg);line-height:1.55;white-space:nowrap}
+.dish .part i{font-style:normal;display:block;font-size:11.5px;text-align:center}
+.dish .art{width:90%;max-width:250px;margin:auto;display:block}
+.dish .en{text-align:center;font-family:var(--serif);font-weight:700;font-size:clamp(13px,1.3vw,17px);letter-spacing:.05em;color:#F1D393;padding-bottom:10px;border-bottom:2px solid rgba(246,231,215,.5)}
+.menu-note{text-align:center;margin-top:80px;font-size:12px;letter-spacing:.35em;color:rgba(58,35,24,.65);font-weight:500}
+
+/* ============ 菜品 COURSE ============ */
+.course{padding:120px 0;border-top:2px solid rgba(58,35,24,.1)}
+.course.alt{background:transparent} /* 取消交替背景色，保持纯净 */
+.course-head{display:flex;align-items:flex-end;gap:26px;margin-bottom:56px;flex-wrap:wrap}
+.course-head .num{font-family:var(--en);font-style:italic;font-size:clamp(70px,11vw,130px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--choco);opacity:.3;font-weight:700}
+.course-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(28px,5vw,52px);letter-spacing:.14em;color:var(--choco)}
+.course-head .sub{display:block;font-weight:500;font-size:15px;letter-spacing:.35em;color:rgba(58,35,24,.65);margin-top:12px}
+.course-head .en{margin-left:auto;font-family:var(--en);font-style:italic;color:var(--choco);letter-spacing:.25em;text-transform:uppercase;font-weight:700;font-size:18px}
+
+/* --- 排版逻辑 --- */
+.grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.grid-one {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+
+/* 作品卡片 —— 适配 1200×675 横版封面图（16:9） */
+.card{position:relative;aspect-ratio:16/9;background:var(--choco);border:2px solid transparent;overflow:hidden;transition:.5s;display:block;border-radius:12px;text-decoration:none;box-shadow:0 10px 20px rgba(0,0,0,.12)}
+.card:hover{transform:translateY(-10px);border-color:var(--yellow);box-shadow:0 20px 30px rgba(0,0,0,.22)}
+.card .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover .cover{transform:scale(1.05)}
+.card .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,13,7,0) 42%,rgba(26,13,7,.4) 64%,rgba(24,12,6,.92) 100%);z-index:1}
+.card .info{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 24px 16px}
+.card .type{font-family:var(--en);font-style:italic;font-size:12px;letter-spacing:.28em;color:var(--yellow);text-transform:uppercase;font-weight:600;display:block}
+.card h3{font-family:var(--serif);font-weight:700;font-size:clamp(18px,2vw,21px);letter-spacing:.08em;margin:6px 0 2px;color:var(--cream)}
+.card p{font-size:12.5px;font-weight:300;color:rgba(253,251,247,.85);letter-spacing:.06em}
+.card .plus{position:absolute;top:16px;right:20px;font-family:var(--en);font-style:italic;color:var(--yellow);opacity:0;transform:rotate(-8deg) translateY(-6px);transition:.4s;font-weight:700;font-size:16px;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+.card:hover .plus{opacity:1;transform:none}
+.course-quote{margin-top:44px;text-align:center;font-family:var(--serif);font-weight:400;font-size:15px;letter-spacing:.3em;color:rgba(58,35,24,.6)}
+.course-quote em{font-family:var(--en);color:var(--choco-light);font-weight:600}
+
+/* ============ 后厨 CHEF —— 设计稿样式 ============ */
+#chef{padding:120px 0;border-top:2px solid rgba(58,35,24,.1)}
+.chef-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px 70px;max-width:1200px;margin:0 auto;padding:0 6vw;align-items:start}
+.chef-left>div+div{margin-top:64px}
+.skill-h{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+.skill-h img{width:42px;flex-shrink:0}
+.skill-h .cn{font-family:var(--serif);font-weight:900;font-size:clamp(20px,2.2vw,27px);letter-spacing:.08em;color:var(--choco);line-height:1.35}
+.skill-h .cn small{display:block;font-family:var(--en);font-style:italic;font-weight:600;font-size:14px;letter-spacing:.14em;color:var(--choco-light)}
+/* 六边形雷达 */
+.radar-wrap{position:relative;max-width:500px;margin:0 auto;padding:44px 60px}
+.radar-wrap>img{width:100%;display:block;filter:drop-shadow(0 20px 34px rgba(0,0,0,.2))}
+.radar-label{position:absolute;font-family:var(--serif);font-weight:700;font-size:clamp(14px,1.5vw,19px);letter-spacing:.12em;color:#F6E476;white-space:nowrap;text-shadow:0 2px 6px rgba(0,0,0,.18);line-height:1.4}
+/* 软件胶囊 */
+.pills{display:flex;flex-wrap:wrap;gap:14px 12px;max-width:460px;margin:0 auto}
+.pill{font-family:var(--en);font-style:italic;font-weight:700;font-size:clamp(15px,1.6vw,21px);letter-spacing:.05em;padding:5px 22px 7px;border-radius:999px;border:2px solid #F6E476;color:#F6E476}
+.pill.fill{background:#F6E476;color:#5C2E14}
+.pill.white{background:var(--cream);border-color:var(--cream);color:#5C2E14}
+/* 职业规划 */
+.career{display:flex;flex-direction:column;align-items:center;text-align:center}
+.plan-box{display:inline-block;background:#6D2C16;color:#F6E476;font-family:var(--serif);font-weight:700;font-size:clamp(15px,1.6vw,20px);letter-spacing:.18em;padding:10px 30px 12px;border-radius:4px;box-shadow:0 12px 26px rgba(0,0,0,.2)}
+.bubble-row{display:flex;justify-content:center;align-items:flex-start;margin:38px 0 40px}
+.bubble{width:clamp(120px,10.5vw,152px);height:clamp(120px,10.5vw,152px);border-radius:50%;background:#F6E476;color:#5C2E14;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(11.5px,1vw,13.5px);line-height:1.7;font-weight:500;letter-spacing:.04em;padding:14px;box-shadow:0 14px 28px rgba(0,0,0,.16)}
+.bubble.big{width:clamp(140px,12.2vw,176px);height:clamp(140px,12.2vw,176px);flex-shrink:0}
+.bubble.side{margin-top:36px}
+.bubble-row .bubble+.bubble{margin-left:-14px}
+.ring-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:540px;margin:40px auto 0}
+.ring{width:100%;aspect-ratio:1;border-radius:50%;border:1.5px solid #F6E476;display:flex;align-items:center;justify-content:center}
+.ring i{width:80%;height:80%;border-radius:50%;background:#F6E476;color:#5C2E14;display:flex;align-items:center;justify-content:center;text-align:center;font-style:normal;font-size:clamp(11px,.95vw,13px);line-height:1.7;font-weight:500;padding:12px;box-shadow:0 14px 28px rgba(0,0,0,.16)}
+
+/* ============ 预订 CONTACT ============ */
+#contact{padding:130px 6vw 60px;text-align:center;border-top:2px solid rgba(58,35,24,.1)}
+#contact .big{font-family:var(--serif);font-weight:900;font-size:clamp(30px,6vw,64px);letter-spacing:.18em;margin:14px 0 8px;color:var(--choco)}
+#contact .en{font-family:var(--en);font-style:italic;color:var(--choco);letter-spacing:.3em;text-transform:uppercase;font-size:16px;font-weight:600}
+#contact .tel{display:inline-block;margin:44px 0 20px;font-family:var(--en);font-size:clamp(22px,4vw,36px);letter-spacing:.14em;color:var(--choco);text-decoration:none;border:3px solid var(--choco);padding:18px 44px;transition:.4s;border-radius:50px;font-weight:700;background:var(--cream);box-shadow:0 8px 0 var(--choco)}
+#contact .tel:hover{background:var(--yellow);transform:translateY(4px);box-shadow:0 4px 0 var(--choco)}
+#contact .cc{font-size:12px;letter-spacing:.35em;color:rgba(58,35,24,.5);margin-top:70px;font-weight:500}
+
+/* ============ 响应式 ============ */
+@media(max-width:1200px){
+  .radar-wrap{padding:36px 44px}
+}
+@media(max-width: 900px) {
+  .dish-grid{grid-template-columns:repeat(2,1fr);max-width:640px;gap:56px 24px;padding-top:80px}
+  .dish:nth-child(odd){margin-top:44px}
+}
+@media(max-width: 768px) {
+  .grid-two {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}
+@media(max-width:560px){
+  .dish-grid{grid-template-columns:1fr;max-width:320px}
+  .dish:nth-child(odd){margin-top:0}
+  .dish .num{width:78px;height:120px;font-size:74px;top:-46px;left:-26px}
+}
+@media(max-width:720px){
+  nav ul{display:none}
+  .course-head .en{margin-left:0}
+  #hero .plate .fork{left:-56px;width:44px}
+  #hero .plate .knife{right:-56px;width:44px}
+  .chef-grid{grid-template-columns:1fr;gap:56px}
+  .bubble-row,.ring-row{flex-wrap:wrap;gap:10px}
+  .bubble-row .bubble+.bubble,.ring-row .ring+.ring{margin-left:0}
+  .bubble.side{margin-top:0}
+}
+</style>
+</head>
+<body>
+
+<!-- 开席 -->
+<div id="loader">
+  <div class="t">欢迎光临</div>
+  <div class="e">Course Sequence · Now Serving</div>
+  <div class="bar"><i></i></div>
+</div>
+
+<!-- 导航 -->
+<nav>
+  <div class="logo">作品集 <em>Restaurant</em></div>
+  <ul>
+    <li><a href="#menu"><b>I</b>菜单</a></li>
+    <li><a href="#p1"><b>II</b>前菜·运营</a></li>
+    <li><a href="#p2"><b>III</b>例汤·包装</a></li>
+    <li><a href="#p3"><b>IV</b>主食·品牌</a></li>
+    <li><a href="#p4"><b>V</b>甜点·综合</a></li>
+    <li><a href="#chef"><b>VI</b>后厨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="plate">
+    <img class="fork" src="images/cutouts/fork.png" alt="">
+    <span>Visual Design</span>
+    <img class="knife" src="images/cutouts/knife.png" alt="">
+  </div>
+  <h1>上菜顺序</h1>
+  <div class="en">Course Sequence · Portfolio 2025 – 2026</div>
+  <div class="meta"><span>视觉设计作品集</span><i></i><span>Visual Design Portfolio</span><i></i><span>共四道菜品</span></div>
+  <div class="scroll">SCROLL ↓</div>
+</section>
+
+<!-- 菜单 · 设计稿小卡片 -->
+<section id="menu">
+  <div class="menu-head reveal">
+    <h2>今 日 菜 单</h2>
+    <p class="en-t">— Table d'Hôte —</p>
+    <p class="orn">✦ ✦ ✦</p>
+  </div>
+  <div class="dish-grid">
+    <a class="dish reveal" href="#p1">
+      <span class="num pink">01</span>
+      <div class="dish-card">
+        <h3>运营<br>设计</h3>
+        <span class="part">Part 壹<i>(前菜)</i></span>
+        <img class="art" src="images/cutouts/dish-01.png" alt="前菜沙拉插画">
+        <p class="en">Campaign Design</p>
+      </div>
+    </a>
+    <a class="dish reveal" href="#p2">
+      <span class="num yellow">02</span>
+      <div class="dish-card">
+        <h3>包装<br>设计</h3>
+        <span class="part">Part 贰<i>(例汤)</i></span>
+        <img class="art" src="images/cutouts/dish-02.png" alt="例汤插画">
+        <p class="en">Packaging Design</p>
+      </div>
+    </a>
+    <a class="dish reveal" href="#p3">
+      <span class="num pink">03</span>
+      <div class="dish-card">
+        <h3>品牌<br>设计</h3>
+        <span class="part">Part 叁<i>(主食)</i></span>
+        <img class="art" src="images/cutouts/dish-03.png" alt="主食牛排插画">
+        <p class="en">Brand Design</p>
+      </div>
+    </a>
+    <a class="dish reveal" href="#p4">
+      <span class="num yellow">04</span>
+      <div class="dish-card">
+        <h3>综合<br>设计</h3>
+        <span class="part">Part 肆<i>(甜点)</i></span>
+        <img class="art" src="images/cutouts/dish-04.png" alt="甜点蛋糕插画">
+        <p class="en">Other Works</p>
+      </div>
+    </a>
+  </div>
+  <p class="menu-note reveal">※ 菜品按上菜顺序依次呈现 · SERVED IN SEQUENCE ※</p>
+</section>
+
+<!-- Part壹 前菜 · 运营（2个项目） -->
+<section class="course" id="p1">
+  <div class="wrap">
+    <div class="course-head reveal">
+      <div class="num">01</div>
+      <div><h2>前菜 · 运营设计<span class="sub">Campaign Design —— 第一道，先声夺人</span></div>
+      <div class="en">Appetizer</div>
+    </div>
+    <div class="grid-two">
+      <a class="card reveal" href="project.html?p=fall-in-love">
+        <img class="cover" src="images/covers/fall-in-love.jpg" alt="完蛋啦 坠入爱河啦 主视觉" loading="lazy">
+        <span class="veil"></span>
+        <span class="plus">View →</span>
+        <div class="info">
+          <span class="type">Campaign / 小红书情感 IP</span>
+          <h3>完蛋啦 坠入爱河啦</h3>
+          <p>情感创作者招募全链路视觉 · 话题曝光 2.2 亿 · Fall in Love</p>
+        </div>
+      </a>
+      <a class="card reveal" href="project.html?p=tide-living">
+        <img class="cover" src="images/covers/tide-living.jpg" alt="赶海生活节 主视觉" loading="lazy">
+        <span class="veil"></span>
+        <span class="plus">View →</span>
+        <div class="info">
+          <span class="type">Campaign / 生活节全案</span>
+          <h3>首届赶海生活节</h3>
+          <p>潮间带主题体验设计 · 浪花与礁石的疗愈之旅 · Tide Living Festival</p>
+        </div>
+      </a>
+    </div>
+    <p class="course-quote reveal">「 轻盈开胃，先让眼睛尝到味道 」 <em>Appetizer First</em></p>
+  </div>
+</section>
+
+<!-- Part贰 例汤 · 包装（1个项目） -->
+<section class="course alt" id="p2">
+  <div class="wrap">
+    <div class="course-head reveal">
+      <div class="num">02</div>
+      <div><h2>例汤 · 包装设计<span class="sub">Packaging Design —— 文火慢炖，细节入味</span></div>
+      <div class="en">Soup</div>
+    </div>
+    <div class="grid-one">
+      <a class="card reveal" href="project.html?p=first-dialogue">
+        <img class="cover" src="images/covers/first-dialogue.jpg" alt="第一次对话 新宠养育礼盒" loading="lazy">
+        <span class="veil"></span>
+        <span class="plus">View →</span>
+        <div class="info">
+          <span class="type">Packaging / 新宠养育礼盒</span>
+          <h3>第一次对话</h3>
+          <p>人猫双视角包装系统 · 可变猫窝的快递盒 · A First Dialogue</p>
+        </div>
+      </a>
+    </div>
+    <p class="course-quote reveal">「 慢工出细活，包装是产品的第二语言 」 <em>Simmer to Perfection</em></p>
+  </div>
+</section>
+
+<!-- Part叁 主食 · 品牌（1个项目） -->
+<section class="course" id="p3">
+  <div class="wrap">
+    <div class="course-head reveal">
+      <div class="num">03</div>
+      <div><h2>主食 · 品牌设计<span class="sub">Brand Design —— 一席之重，撑起全场</span></div>
+      <div class="en">Main Course</div>
+    </div>
+    <div class="grid-one">
+      <a class="card reveal" href="project.html?p=woopen">
+        <img class="cover" src="images/covers/woopen.jpg" alt="木盆 WOOPEN SALABAR 门头" loading="lazy">
+        <span class="veil"></span>
+        <span class="plus">View →</span>
+        <div class="info">
+          <span class="type">Brand / 轻食品牌 VI 全案</span>
+          <h3>木盆 WOOPEN SALABAR</h3>
+          <p>有木盆，让饮食更自由 · 从 Logo 推演到全套应用</p>
+        </div>
+      </a>
+    </div>
+    <p class="course-quote reveal">「 主菜登场，品牌即体验本身 」 <em>The Heart of the Table</em></p>
+  </div>
+</section>
+
+<!-- Part肆 甜点 · 综合（1个项目） -->
+<section class="course alt" id="p4">
+  <div class="wrap">
+    <div class="course-head reveal">
+      <div class="num">04</div>
+      <div><h2>甜点 · 综合设计<span class="sub">Other Works —— 收官之作，回甘悠长</span></div>
+      <div class="en">Dessert</div>
+    </div>
+    <div class="grid-one">
+      <a class="card reveal" href="project.html?p=zijian">
+        <img class="cover" src="images/covers/zijian.jpg" alt="字·间 书法空间展览" loading="lazy">
+        <span class="veil"></span>
+        <span class="plus">View →</span>
+        <div class="info">
+          <span class="type">Mixed / 展览主视觉</span>
+          <h3>字·间 2025</h3>
+          <p>书法笔触立体化 · 展览视觉与全套延展 · ZIJIAN</p>
+        </div>
+      </a>
+    </div>
+    <p class="course-quote reveal">「 甜点收尾，余味也是记忆点 」 <em>Sweet Ending</em></p>
+  </div>
+</section>
+
+<!-- 后厨 CHEF / 技能 —— 设计稿样式 -->
+<section id="chef">
+  <div class="wrap">
+    <div class="course-head reveal">
+      <div class="num">★</div>
+      <div><h2>后厨的秘密<span class="sub">My Skill & Career Planning</span></div>
+      <div class="en">Behind the Kitchen</div>
+    </div>
+    <div class="chef-grid">
+      <div class="chef-left">
+        <div class="reveal">
+          <div class="skill-h">
+            <img src="images/cutouts/icon-pen.png" alt="">
+            <p class="cn">我的优势图<small>My Skill Platter</small></p>
+          </div>
+          <div class="radar-wrap">
+            <img src="images/cutouts/radar.png" alt="六边形巧克力优势雷达盘">
+            <span class="radar-label" style="top:6%;left:14%">学习能力</span>
+            <span class="radar-label" style="top:8%;right:4%">产品思维</span>
+            <span class="radar-label" style="top:42%;left:-6%">AIGC<br>掌握度</span>
+            <span class="radar-label" style="top:42%;right:-6%">沟通<br>能力</span>
+            <span class="radar-label" style="bottom:6%;left:12%">应变能力</span>
+            <span class="radar-label" style="bottom:8%;right:8%">抗压能力</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="skill-h">
+            <img src="images/cutouts/icon-wrench.png" alt="">
+            <p class="cn">软件掌握情况<small>My Skill Platter</small></p>
+          </div>
+          <div class="pills">
+            <span class="pill fill">AIGC + Lib</span>
+            <span class="pill white">RHINO</span>
+            <span class="pill">PS,AI,PR</span>
+            <span class="pill fill">C4D,3DM</span>
+            <span class="pill">CAD</span>
+          </div>
+        </div>
+      </div>
+      <div class="career reveal">
+        <div class="skill-h">
+          <img src="images/cutouts/icon-check.png" alt="">
+          <p class="cn">我的职业发展规划<small>My Career Planning</small></p>
+        </div>
+        <span class="plan-box">短期规划( 1–3年 )</span>
+        <div class="bubble-row">
+          <span class="bubble side">完善AIGC设计工作流,赋能创意发散</span>
+          <span class="bubble big">强化用户思维 结合用户反馈 反推视觉策略</span>
+          <span class="bubble side">高效对接跨部门需求,保障项目的高质量交付</span>
+        </div>
+        <span class="plan-box">长期规划( 3–5年 )</span>
+        <div class="ring-row">
+          <span class="ring"><i>沉淀项目经验 独立负责S级活动 全案视觉设计</i></span>
+          <span class="ring"><i>输出可复用的视觉规范与AI落地方法 带动团队提效</i></span>
+          <span class="ring"><i>紧跟行业与AI设计前沿趋势 持续迭代设计能力</i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 预订 CONTACT -->
+<footer id="contact">
+  <p class="sec-tag">Reservation</p>
+  <p class="big">预 订 一 场 视 觉 盛 宴</p>
+  <p class="en">Let's Cook Something Great Together</p>
+  <a class="tel" href="tel:13422068056">TEL · 134-2206-8056</a>
+  <p class="cc">© 2025–2026 VISUAL DESIGN PORTFOLIO · SERVED WITH PASSION</p>
+</footer>
+
+<script>
+// 开席动画(同一会话只播一次;带锚点返回时直接跳过)
+const loader=document.getElementById('loader');
+if(location.hash || sessionStorage.getItem('cs_visited')){
+  loader.style.display='none';
+  if(location.hash){
+    // 显式定位到锚点(避免字体/图片加载后锚点失效)
+    const target=document.querySelector(location.hash);
+    if(target){
+      document.documentElement.style.scrollBehavior='auto';
+      const go=()=>target.scrollIntoView();
+      go(); window.addEventListener('load',go);
+    }
+  }
+}else{
+  sessionStorage.setItem('cs_visited','1');
+  window.addEventListener('load',()=>{
+    setTimeout(()=>loader.classList.add('done'),1800);
+  });
+}
+// 滚动浮现
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

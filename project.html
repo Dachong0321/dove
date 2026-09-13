@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>菜品详情 · 上菜顺序 2025–2026 视觉设计作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1DACD6;
+  --choco:#3A2318;
+  --choco-light:#5C3A21;
+  --yellow:#FFE066;
+  --pink:#FFB6C1;
+  --red:#D93B3B;
+  --cream:#FDFBF7;
+  --card-brown:#6D2C16;
+  --serif:"Noto Serif SC",serif;
+  --en:"Cormorant Garamond",serif;
+  --sans:"Noto Sans SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--blue);color:var(--choco);font-family:var(--sans);overflow-x:hidden;line-height:1.8}
+::selection{background:var(--yellow);color:var(--choco)}
+
+/* ============ 导航 ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;background:rgba(29,172,214,.9);backdrop-filter:blur(6px);border-bottom:1px solid rgba(58,35,24,.08);transition:transform .45s ease,opacity .45s ease}
+nav.hidden-top{opacity:0;transform:translateY(-100%);pointer-events:none}
+nav .back{font-family:var(--serif);font-size:15px;letter-spacing:.22em;font-weight:700;color:var(--choco);text-decoration:none;display:flex;align-items:center;gap:10px;padding:8px 16px;border:1.5px solid var(--choco);border-radius:999px;transition:.35s}
+nav .back:hover{background:var(--yellow)}
+nav .crumb{font-size:12.5px;letter-spacing:.2em;color:rgba(58,35,24,.75);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+
+/* ============ 通用 ============ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 6vw}
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.en-it{font-family:var(--en);font-style:italic}
+
+/* ============ 开席 LOADING ============ */
+#loader{position:fixed;inset:0;background:var(--blue);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .9s ease,visibility .9s}
+#loader.done{opacity:0;visibility:hidden}
+#loader .t{font-family:var(--serif);font-weight:900;font-size:clamp(24px,4.5vw,44px);letter-spacing:.5em;text-indent:.5em;color:var(--choco)}
+#loader .e{font-family:var(--en);font-size:13px;letter-spacing:.5em;color:var(--choco);text-transform:uppercase;font-weight:600}
+
+/* ============ 菜品 HERO ============ */
+#dish-hero{padding:150px 0 60px;text-align:center}
+#dish-hero .course-line{font-family:var(--en);font-style:italic;font-size:15px;letter-spacing:.4em;text-transform:uppercase;font-weight:600;color:rgba(58,35,24,.7)}
+#dish-hero .course-line b{color:var(--choco);font-weight:700}
+#dish-hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,5.6vw,64px);letter-spacing:.1em;line-height:1.3;margin:18px 0 10px;color:var(--choco)}
+#dish-hero .en-t{font-family:var(--en);font-style:italic;font-size:clamp(15px,2vw,24px);letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:rgba(58,35,24,.8)}
+#dish-hero .meta{margin-top:26px;display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+#dish-hero .meta span{font-size:12.5px;letter-spacing:.22em;font-weight:500;border:1.5px solid rgba(58,35,24,.55);border-radius:999px;padding:7px 18px;color:var(--choco)}
+#dish-hero .meta span.hl{background:var(--yellow);border-color:var(--choco)}
+#dish-hero .cover-frame{margin:52px auto 0;max-width:960px;position:relative}
+#dish-hero .cover-frame img{width:100%;display:block;border-radius:14px;box-shadow:0 34px 70px rgba(0,0,0,.25);border:3px solid var(--cream)}
+#dish-hero .cover-frame .plate-tag{position:absolute;top:-24px;left:-20px;background:var(--card-brown);color:#F6E7D7;font-family:var(--serif);font-size:13px;letter-spacing:.25em;padding:10px 20px;border-radius:4px;box-shadow:0 10px 22px rgba(0,0,0,.25);transform:rotate(-5deg)}
+
+/* ============ 设计说明 ============ */
+#brief{padding:80px 0 30px}
+.brief-card{background:var(--cream);color:var(--choco);max-width:900px;margin:0 auto;padding:52px 56px;border-radius:12px;box-shadow:0 30px 70px rgba(0,0,0,.18);position:relative}
+.brief-card::before{content:"❝";position:absolute;top:-6px;left:24px;font-family:var(--en);font-size:74px;color:var(--yellow);line-height:1;text-shadow:0 4px 0 rgba(58,35,24,.15)}
+.brief-card .tag{font-family:var(--en);font-style:italic;font-size:13px;letter-spacing:.35em;text-transform:uppercase;font-weight:700;color:var(--choco-light)}
+.brief-card h2{font-family:var(--serif);font-weight:900;font-size:clamp(20px,2.6vw,28px);letter-spacing:.2em;margin:8px 0 18px}
+.brief-card p{font-size:14.5px;font-weight:400;color:rgba(58,35,24,.85);letter-spacing:.04em;text-align:justify}
+.brief-card .facts{margin-top:26px;padding-top:22px;border-top:2px dashed rgba(58,35,24,.25);display:flex;flex-wrap:wrap;gap:12px 34px}
+.brief-card .facts div{font-size:12.5px;letter-spacing:.18em;color:rgba(58,35,24,.65)}
+.brief-card .facts b{display:block;font-family:var(--en);font-style:italic;font-size:24px;font-weight:700;color:var(--choco);letter-spacing:.05em}
+
+/* ============ 内页画廊 ============ */
+#gallery{padding:90px 0 40px}
+#gallery .g-head{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:46px}
+#gallery .g-head .num{font-family:var(--en);font-style:italic;font-size:clamp(56px,8vw,96px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--choco);opacity:.3;font-weight:700}
+#gallery .g-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3.4vw,36px);letter-spacing:.22em;color:var(--choco)}
+#gallery .g-head .sub{display:block;font-size:13px;letter-spacing:.3em;color:rgba(58,35,24,.6);font-weight:500;margin-top:8px}
+#gallery .g-head .cnt{margin-left:auto;font-family:var(--en);font-style:italic;font-size:16px;letter-spacing:.2em;font-weight:700;color:rgba(58,35,24,.75)}
+.page-item{margin-bottom:34px}
+.page-item img{width:100%;display:block;border-radius:10px;box-shadow:0 16px 38px rgba(0,0,0,.2);cursor:zoom-in;transition:transform .5s ease,box-shadow .5s ease}
+.page-item img:hover{transform:translateY(-6px) scale(1.005);box-shadow:0 26px 52px rgba(0,0,0,.3)}
+.page-item .pno{text-align:center;font-family:var(--en);font-style:italic;font-size:13px;letter-spacing:.4em;font-weight:700;color:rgba(58,35,24,.55);margin-top:12px}
+.gallery-note{text-align:center;font-size:12px;letter-spacing:.35em;color:rgba(58,35,24,.55);font-weight:500;margin:30px 0 20px}
+
+/* ============ 下一道菜 / 谢谢品鉴 ============ */
+#next{padding:60px 0 110px;text-align:center}
+#next .line{width:64px;height:2px;background:rgba(58,35,24,.35);margin:0 auto 36px}
+#next .tip{font-family:var(--en);font-style:italic;font-size:14px;letter-spacing:.4em;text-transform:uppercase;font-weight:700;color:rgba(58,35,24,.7)}
+#next .tip .cn{font-family:var(--serif);font-style:normal;letter-spacing:.3em;margin-left:6px}
+#next a.next-card{display:inline-flex;align-items:center;gap:26px;margin-top:26px;text-decoration:none;background:var(--card-brown);border-radius:14px;padding:20px 34px;box-shadow:0 18px 40px rgba(0,0,0,.22);transition:.45s cubic-bezier(.2,.7,.2,1)}
+#next a.next-card:hover{transform:translateY(-10px);box-shadow:0 30px 56px rgba(0,0,0,.32)}
+#next a.next-card img{width:150px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:2px solid rgba(253,251,247,.4)}
+#next a.next-card .tx{text-align:left}
+#next a.next-card .tx .c{font-family:var(--en);font-style:italic;font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--yellow)}
+#next a.next-card .tx .n{font-family:var(--serif);font-weight:900;font-size:clamp(18px,2.4vw,26px);letter-spacing:.1em;color:var(--cream);margin-top:4px}
+#next a.next-card .arrow{font-family:var(--en);font-style:italic;font-size:30px;color:var(--yellow);font-weight:700}
+/* 纸巾 · 谢谢品鉴(最后一道菜收尾) */
+.end-block{display:none;margin-top:30px}
+.end-block.show{display:block;animation:endIn 1s ease both}
+@keyframes endIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.end-frame{max-width:720px;margin:0 auto;position:relative}
+.end-frame img{width:100%;display:block;border-radius:14px;box-shadow:0 30px 64px rgba(0,0,0,.28);border:3px solid var(--cream)}
+.end-frame .napkin-tag{position:absolute;top:-20px;right:-16px;background:var(--card-brown);color:#F6E7D7;font-family:var(--serif);font-size:13px;letter-spacing:.25em;padding:10px 20px;border-radius:4px;box-shadow:0 10px 22px rgba(0,0,0,.25);transform:rotate(4deg)}
+a.back-menu{display:inline-flex;align-items:center;gap:12px;margin-top:44px;text-decoration:none;font-family:var(--serif);font-size:15px;letter-spacing:.22em;font-weight:700;color:var(--choco);border:2px solid var(--choco);border-radius:999px;padding:14px 34px;background:var(--cream);box-shadow:0 6px 0 var(--choco);transition:.35s}
+a.back-menu:hover{background:var(--yellow);transform:translateY(4px);box-shadow:0 2px 0 var(--choco)}
+
+/* ============ 页脚 ============ */
+footer{padding:40px 6vw 46px;text-align:center;border-top:2px solid rgba(58,35,24,.12)}
+footer .cc{font-size:12px;letter-spacing:.35em;color:rgba(58,35,24,.55);font-weight:500}
+
+/* ============ 灯箱 ============ */
+#lightbox{position:fixed;inset:0;z-index:500;background:rgba(20,10,5,.92);display:none;align-items:center;justify-content:center;padding:4vh 4vw;cursor:zoom-out}
+#lightbox.open{display:flex}
+#lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+#lightbox .lb-no{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-family:var(--en);font-style:italic;font-size:14px;letter-spacing:.4em;color:rgba(253,251,247,.75);font-weight:600}
+#lightbox .close{position:absolute;top:22px;right:30px;font-family:var(--en);font-style:italic;font-size:30px;color:var(--yellow);cursor:pointer;font-weight:700;line-height:1}
+
+/* ============ 响应式 ============ */
+@media(max-width:720px){
+  nav .crumb{display:none}
+  #dish-hero{padding-top:120px}
+  .brief-card{padding:40px 26px}
+  #next a.next-card{flex-direction:column;gap:14px;text-align:center}
+  #next a.next-card .tx{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="t">上菜中</div>
+  <div class="e">Plating · Please Wait</div>
+</div>
+
+<nav id="nav">
+  <a class="back" href="index.html#menu">← 回到菜单</a>
+  <div class="crumb" id="crumb"></div>
+</nav>
+
+<!-- 菜品 HERO -->
+<section id="dish-hero">
+  <div class="wrap">
+    <p class="course-line" id="courseLine"></p>
+    <h1 id="dishTitle"></h1>
+    <p class="en-t" id="dishEn"></p>
+    <div class="meta" id="dishMeta"></div>
+    <div class="cover-frame reveal">
+      <span class="plate-tag" id="plateTag"></span>
+      <img id="dishCover" src="" alt="项目封面">
+    </div>
+  </div>
+</section>
+
+<!-- 设计说明 -->
+<section id="brief">
+  <div class="wrap">
+    <div class="brief-card reveal">
+      <p class="tag">Background · 设计说明</p>
+      <h2 id="briefTitle"></h2>
+      <p id="briefText"></p>
+      <div class="facts" id="briefFacts"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 内页画廊 -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="g-head reveal">
+      <div class="num" id="gNum"></div>
+      <div>
+        <h2>菜 品 全 记 录</h2>
+        <span class="sub">SERVED IN SEQUENCE · 按页呈现</span>
+      </div>
+      <div class="cnt" id="gCnt"></div>
+    </div>
+    <div id="pages"></div>
+    <p class="gallery-note">※ 点击任意页面可放大细品 · CLICK TO ZOOM ※</p>
+  </div>
+</section>
+
+<!-- 下一道菜 / 谢谢品鉴 -->
+<section id="next">
+  <div class="line"></div>
+  <p class="tip" id="nextTip">Next Course · <span class="cn">下一道菜</span></p>
+  <a class="next-card" id="nextCard" href="#">
+    <img id="nextCover" src="" alt="">
+    <span class="tx">
+      <span class="c" id="nextCourse"></span>
+      <span class="n" id="nextTitle"></span>
+    </span>
+    <span class="arrow">→</span>
+  </a>
+  <div class="end-block" id="endBlock">
+    <div class="end-frame">
+      <span class="napkin-tag">纸巾 · 用餐结束</span>
+      <img src="images/pages/p111_thanks.png" alt="谢谢观看 Thanks for Watching">
+    </div>
+    <a class="back-menu" href="index.html#menu">← 回到菜单 · 再点一桌</a>
+  </div>
+</section>
+
+<footer>
+  <p class="cc">© 2025–2026 VISUAL DESIGN PORTFOLIO · SERVED WITH PASSION</p>
+</footer>
+
+<!-- 灯箱 -->
+<div id="lightbox">
+  <span class="close">Close ×</span>
+  <img src="" alt="">
+  <p class="lb-no"></p>
+</div>
+
+<script>
+// ============ 项目数据 ============
+const PROJECTS = {
+  'fall-in-love': {
+    no:'壹', num:'01', course:'前菜 · 运营设计', courseEn:'Appetizer · Campaign',
+    title:'完蛋啦 坠入爱河啦', en:'Fall in Love',
+    type:'Campaign / 小红书情感 IP',
+    brief:'为小红书全新 IP「完蛋啦 坠入爱河啦」开展情感创作者招募活动，面向情感向潜力创作者发起征集，搭建情感内容创作阵地。以织线元素、动效策略、人物摄影与轮播串联四种手法，体现情感链接与手工温度感。活动尚在进行、数据持续上涨：话题累计曝光 2.2 亿，讨论 96.2 万，完成新 IP 冷启动的阶段性声量传播。',
+    facts:[['2.2 亿','话题累计曝光'],['96.2 万','用户讨论量'],['0.44%','互动转化率'],['13 页','方案页数']],
+    cover:'images/covers/fall-in-love.jpg', pages:13
+  },
+  'tide-living': {
+    no:'壹', num:'02', course:'前菜 · 运营设计', courseEn:'Appetizer · Campaign',
+    title:'首届「赶海生活节」', en:'The Inaugural Tide Living Festival',
+    type:'Campaign / 生活节全案',
+    brief:'中国约有 1.4 亿活跃海边户外爱好者，「摸鱼」「抓虾」成为年轻人的社交货币，赶海正从沿海日常演变为都市人逃离压力的潮流生活方式。本项目选址礁石潮间带，将浪花的节奏、礁石的孔洞、藤壶的肌理转化为可触摸的体验设计——退潮时提桶寻宝，累了坐听浪花音乐会，在潮起潮落之间过一天海边的生活。',
+    facts:[['1.4 亿','海边户外爱好者'],['06.30–08.30','活动周期'],['4 类','核心视觉元素'],['19 页','方案页数']],
+    cover:'images/covers/tide-living.jpg', pages:19
+  },
+  'first-dialogue': {
+    no:'贰', num:'03', course:'例汤 · 包装设计', courseEn:'Soup · Packaging',
+    title:'「第一次对话」新宠养育礼盒', en:'A First Dialogue · New Pet Care Kit',
+    type:'Packaging / 新宠养育礼盒',
+    brief:'2026 年全国犬猫数量预计攀升至 1.75 亿只，宠物大时代全面到来。礼盒以「人猫视觉游戏」为核心——附赠蓝光滤镜片，透过观察时表层色彩被过滤、底层专为猫咪设计的图案显现；包装采用瓦楞纸板材质，磨爪、减压、气味标记三位一体；内包装更可折叠为猫窝，让快递盒成为猫咪的第一件家具。',
+    facts:[['1.75 亿','2026 犬猫预测量'],['3 重','人猫交互巧思'],['5 层','礼盒结构'],['25 页','方案页数']],
+    cover:'images/covers/first-dialogue.jpg', pages:25
+  },
+  'woopen': {
+    no:'叁', num:'04', course:'主食 · 品牌设计', courseEn:'Main Course · Brand',
+    title:'「木盆 WOOPEN SALABAR」轻食品牌 VI', en:'Woopen Salabar Brand Visual',
+    type:'Brand / 轻食品牌 VI 全案',
+    brief:'自 2007 年起，木盆致力于打造城市「蔬菜绿洲」，Slogan「有木盆，让饮食更自由！」。木盆作为餐具传达自然、手作、安心的感觉，集中食物显分量足，与常见轻食店形成差异化；将餐品搭配的选择权交给顾客，以「木盆绿洲」视觉符号建立第一触点，践行「弱商业，强体验」的品牌之路。',
+    facts:[['since 2007','品牌起始年'],['4 色','品牌色板系统'],['23 页','方案页数'],['22–35 岁','核心客群']],
+    cover:'images/covers/woopen.jpg', pages:23
+  },
+  'zijian': {
+    no:'肆', num:'05', course:'甜点 · 综合设计', courseEn:'Dessert · Other Works',
+    title:'「字·间」2025 书法空间展览', en:'ZIJIAN Brand Visual Exhibition Hall',
+    type:'Mixed / 展览主视觉全案',
+    brief:'以「解构笔触墨立体动态，重构文化叙事」为核心理念，聚焦书法书写轨迹的立体化诠释与媒介表达。将抽象的行笔韵律转化为三维空间中的可视化动态语言，捕捉书写过程中的力度、速度与节奏变化——提按、绞转、平动，笔画跃出二维纸面，在展台三维流动，使书法中蕴藏的情绪与韵律得以具象呈现。',
+    facts:[['3 类','核心笔法提取'],['2025.2.25','开展日期'],['23 页','方案页数'],['4 支柱','品牌故事支点']],
+    cover:'images/covers/zijian.jpg', pages:23
+  }
+};
+const ORDER = ['fall-in-love','tide-living','first-dialogue','woopen','zijian'];
+
+// ============ 渲染 ============
+const params = new URLSearchParams(location.search);
+let key = params.get('p');
+if (!PROJECTS[key]) key = ORDER[0];
+const P = PROJECTS[key];
+const pad = n => String(n).padStart(2,'0');
+
+document.title = P.title + ' · 上菜顺序 2025–2026 视觉设计作品集';
+document.getElementById('crumb').textContent = 'Part ' + P.no + ' · ' + P.course + ' — ' + P.title;
+document.getElementById('courseLine').innerHTML = 'Part ' + P.no + ' · <b>' + P.course + '</b> · ' + P.courseEn;
+document.getElementById('dishTitle').textContent = P.title;
+document.getElementById('dishEn').textContent = P.en;
+document.getElementById('dishMeta').innerHTML =
+  '<span class="hl">' + P.type + '</span><span>共 ' + P.pages + ' 页方案</span><span>2025 – 2026</span>';
+document.getElementById('plateTag').textContent = '第 ' + P.no + ' 道 · ' + P.course.split(' · ')[0];
+const coverEl = document.getElementById('dishCover');
+coverEl.src = P.cover; coverEl.alt = P.title + ' 封面';
+document.getElementById('briefTitle').textContent = P.title;
+document.getElementById('briefText').textContent = P.brief;
+document.getElementById('briefFacts').innerHTML =
+  P.facts.map(f => '<div><b>' + f[0] + '</b>' + f[1] + '</div>').join('');
+document.getElementById('gNum').textContent = P.num;
+document.getElementById('gCnt').textContent = 'P.01 – ' + pad(P.pages) + ' · ' + P.pages + ' Pages';
+
+// 内页画廊
+const pagesEl = document.getElementById('pages');
+for (let i = 1; i <= P.pages; i++) {
+  const item = document.createElement('div');
+  item.className = 'page-item reveal';
+  item.innerHTML =
+    '<img loading="lazy" src="images/projects/' + key + '/p' + pad(i) + '.jpg" alt="' + P.title + ' P.' + pad(i) + '">' +
+    '<p class="pno">P. ' + pad(i) + '</p>';
+  pagesEl.appendChild(item);
+}
+
+// 下一道菜 / 谢谢品鉴
+const isLast = ORDER.indexOf(key) === ORDER.length - 1;
+if (isLast) {
+  // 最后一道菜:上纸巾,不再循环
+  document.getElementById('nextCard').style.display = 'none';
+  document.getElementById('nextTip').innerHTML = 'Meal Finished · <span class="cn">谢谢品鉴</span>';
+  document.getElementById('endBlock').classList.add('show');
+} else {
+  const nextKey = ORDER[(ORDER.indexOf(key) + 1) % ORDER.length];
+  const N = PROJECTS[nextKey];
+  document.getElementById('nextCard').href = 'project.html?p=' + nextKey;
+  document.getElementById('nextCover').src = N.cover;
+  document.getElementById('nextCourse').textContent = 'Part ' + N.no + ' · ' + N.course;
+  document.getElementById('nextTitle').textContent = N.title;
+}
+
+// ============ 交互 ============
+// 加载层
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('done'), 900);
+});
+// 导航条:顶部隐藏,滚动后出现
+const nav = document.getElementById('nav');
+const syncNav = () => {
+  const past = window.scrollY > 60;
+  nav.classList.toggle('hidden-top', !past);
+};
+syncNav();
+window.addEventListener('scroll', syncNav, { passive: true });
+// 滚动浮现
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+// 灯箱
+const lb = document.getElementById('lightbox');
+const lbImg = lb.querySelector('img');
+const lbNo = lb.querySelector('.lb-no');
+pagesEl.addEventListener('click', e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+  lbImg.src = img.src;
+  lbNo.textContent = 'P. ' + img.src.match(/p(\d+)\.jpg$/)[1];
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+lb.addEventListener('click', closeLb);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
